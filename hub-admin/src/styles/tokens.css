@@ -1,0 +1,52 @@
+:root {
+  /* Brand */
+  --primary: #ED4C17;
+  --primary-hover: #F07839;
+  --secondary-orange: #F07839;
+  --navy: #0B1E3D;
+  --navy-secondary: #142B52;
+  --cream: #F7F4EC;
+  --off-white: #FFFDF9;
+  --white: #FFFFFF;
+  --gold: #C9A24B;
+
+  /* Text */
+  --text-primary: #20242C;
+  --text-secondary: #737B89;
+  --border: #E5E7EB;
+
+  /* Status */
+  --success: #168653;
+  --warning: #D99518;
+  --error: #D93636;
+  --disabled: #A8ADB7;
+
+  /* Accessible companions: the brand orange is 3.7:1 against white, so small text
+     and filled buttons carry the darker shades below. */
+  --primary-text: #C43E0F;
+  --primary-press: #A8330B;
+  --text-body-muted: #5F6775;
+  --btn-bg: #D9420F;
+
+  --gradient-brand: linear-gradient(135deg, #ED4C17, #F07839);
+  --gradient-dark: linear-gradient(135deg, #0B1E3D, #142B52);
+
+  /* Type */
+  --font: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+  --fs-sm: 0.875rem;
+  --fs-base: 1rem;
+  --fs-lg: 1.125rem;
+  --fs-h3: 1.25rem;
+  --fs-h2: clamp(1.625rem, 1.2rem + 1.6vw, 2.25rem);
+  --fs-h1: clamp(2.125rem, 1.4rem + 3.2vw, 3.75rem);
+
+  /* Layout */
+  --wrap: 1120px;
+  --gutter: 20px;
+  --radius: 8px;
+  --radius-lg: 12px;
+  --section-y: clamp(56px, 8vw, 104px);
+
+  --ease: cubic-bezier(0.22, 1, 0.36, 1);
+  --shadow-card: 0 1px 2px rgba(11, 30, 61, 0.05), 0 8px 24px rgba(11, 30, 61, 0.06);
+}
