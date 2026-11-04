@@ -1,5 +1,6 @@
 import { Seo } from '../components/Seo'
 import { ContactForm } from '../components/Forms'
+import { CONTACT_EMAIL } from '../lib/site'
 
 export default function Contact() {
   return (
@@ -15,6 +16,9 @@ export default function Contact() {
       <section className="section">
         <div className="wrap" style={{ maxWidth: 680 }}>
           <ContactForm />
+          <p className="muted" style={{ marginTop: 28 }}>
+            Prefer email? Write to <a href={`mailto:${CONTACT_EMAIL}`}>{CONTACT_EMAIL}</a>.
+          </p>
         </div>
       </section>
     </>

@@ -1,23 +1,66 @@
-.hero { position: relative; overflow: hidden; padding: clamp(40px, 7vw, 88px) 0 clamp(56px, 8vw, 96px); background:
-  radial-gradient(900px 420px at 85% -10%, rgba(240, 120, 57, 0.12), transparent 70%),
-  var(--off-white); }
+/* Dark hero. All effects are CSS only and use transform and opacity so they stay smooth on phones. */
+.hero {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  color: #fff;
+  padding: clamp(48px, 8vw, 96px) 0 clamp(64px, 9vw, 112px);
+  background: linear-gradient(120deg, var(--navy-deep) 0%, var(--navy) 42%, var(--navy-secondary) 68%, var(--navy) 100%);
+  background-size: 220% 220%;
+  animation: hero-shift 26s ease-in-out infinite alternate;
+}
+@keyframes hero-shift { to { background-position: 100% 60%; } }
+
+/* Glow orbs */
+.hero::before, .hero::after { content: ''; position: absolute; z-index: -1; border-radius: 50%; pointer-events: none; }
+.hero::before { width: 640px; height: 640px; right: -200px; top: -240px; background: radial-gradient(circle, rgba(237, 76, 23, 0.34), transparent 68%); animation: breathe 10s ease-in-out infinite; }
+.hero::after { width: 560px; height: 560px; left: -220px; bottom: -280px; background: radial-gradient(circle, rgba(201, 162, 75, 0.14), transparent 68%); animation: breathe 13s ease-in-out infinite reverse; }
+@keyframes breathe { 0%, 100% { transform: scale(1); opacity: 0.85; } 50% { transform: scale(1.08); opacity: 1; } }
+
+/* Decorative layer: faint grid, geometric shapes, orange particles */
+.hero__fx { position: absolute; inset: 0; z-index: -1; pointer-events: none; overflow: hidden; }
+.hero__fx::before { content: ''; position: absolute; inset: 0; background-image: linear-gradient(rgba(255, 255, 255, 0.04) 1px, transparent 1px), linear-gradient(90deg, rgba(255, 255, 255, 0.04) 1px, transparent 1px); background-size: 56px 56px; -webkit-mask-image: radial-gradient(ellipse at 70% 40%, #000 0%, transparent 72%); mask-image: radial-gradient(ellipse at 70% 40%, #000 0%, transparent 72%); }
+.hero__fx::after { content: ''; position: absolute; left: 6%; top: 14%; width: 3px; height: 3px; border-radius: 50%; background: #FF8A5C; color: #FF8A5C;
+  box-shadow: 120px 80px 0 0 rgba(255,138,92,.9), 260px 300px 0 0 rgba(255,138,92,.7), 380px 40px 0 0 rgba(255,255,255,.6), 520px 210px 0 0 rgba(255,138,92,.8), 640px 120px 0 0 rgba(255,255,255,.5), 760px 360px 0 0 rgba(255,138,92,.9), 880px 60px 0 0 rgba(255,138,92,.6), 960px 260px 0 0 rgba(255,255,255,.6), 1060px 420px 0 0 rgba(255,138,92,.8), 180px 440px 0 0 rgba(255,255,255,.5), 330px 520px 0 0 rgba(255,138,92,.7), 1180px 140px 0 0 rgba(255,138,92,.7);
+  animation: twinkle 6s ease-in-out infinite; }
+@keyframes twinkle { 0%, 100% { opacity: 0.35; } 50% { opacity: 1; } }
+
+.fx { position: absolute; border: 1px solid rgba(255, 255, 255, 0.16); }
+.fx--ring { width: 220px; height: 220px; border-radius: 50%; right: 4%; top: 8%; border-color: rgba(237, 76, 23, 0.4); animation: spin 70s linear infinite; }
+.fx--square { width: 120px; height: 120px; left: 3%; bottom: 10%; transform: rotate(18deg); animation: drift 14s ease-in-out infinite; }
+.fx--diamond { width: 64px; height: 64px; left: 46%; top: 6%; transform: rotate(45deg); border-color: rgba(201, 162, 75, 0.5); animation: drift 11s ease-in-out infinite reverse; }
+.fx--bar { width: 150px; height: 2px; border: 0; right: 10%; bottom: 14%; background: linear-gradient(90deg, transparent, rgba(237, 76, 23, 0.8), transparent); animation: slide 9s ease-in-out infinite; }
+@keyframes spin { to { transform: rotate(360deg); } }
+@keyframes drift { 0%, 100% { translate: 0 0; } 50% { translate: 10px -16px; } }
+@keyframes slide { 0%, 100% { translate: -24px 0; opacity: 0.4; } 50% { translate: 24px 0; opacity: 1; } }
+
+/* Gentle parallax while scrolling (CSS only, where the browser supports it) */
+@supports (animation-timeline: scroll()) {
+  .hero__fx { animation: hero-parallax linear both; animation-timeline: scroll(root); animation-range: 0 640px; }
+  @keyframes hero-parallax { to { transform: translateY(70px); } }
+}
+
 .hero__grid { display: grid; gap: 48px; grid-template-columns: minmax(0, 1fr); align-items: center; }
 @media (min-width: 960px) { .hero__grid { grid-template-columns: minmax(0, 1.05fr) minmax(0, 0.95fr); gap: 64px; } }
-.hero h1 { margin-bottom: 20px; }
+.hero h1 { margin-bottom: 20px; color: #fff; font-weight: 800; }
+.hero .accent { color: var(--primary-on-dark); }
+.hero .eyebrow { color: var(--primary-on-dark); }
+.hero .lede { color: var(--soft-grey); }
 .hero__cta { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 28px; }
 .hero__cta .btn { flex: 1 1 100%; }
 @media (min-width: 480px) { .hero__cta .btn { flex: 0 0 auto; } }
-.hero__note { margin-top: 20px; font-size: var(--fs-sm); color: var(--text-body-muted); }
+.hero .btn--ghost { color: #fff; border-color: rgba(255, 255, 255, 0.38); }
+.hero .btn--ghost:hover { color: #fff; border-color: #fff; background: rgba(255, 255, 255, 0.08); }
+.hero__note { margin-top: 20px; font-size: var(--fs-sm); color: #98A4BA; }
 
-/* Learn → Build → Grow scene (CSS only, transforms and opacity) */
+/* Learn, Build, Grow scene: glass panels over the dark hero */
 .scene { position: relative; min-height: 420px; padding: 8px 0; }
-.scene__orbit { position: absolute; right: -90px; top: 50%; width: 360px; height: 360px; margin-top: -180px; border: 1px dashed #D8DCE3; border-radius: 50%; animation: spin 80s linear infinite; pointer-events: none; }
-.scene__orbit::after { content: ''; position: absolute; top: 14px; left: 50%; width: 10px; height: 10px; margin-left: -5px; border-radius: 50%; background: var(--primary); }
-.scene__orbit--inner { width: 230px; height: 230px; margin-top: -115px; right: -25px; animation-duration: 55s; animation-direction: reverse; border-color: #E6E9EE; }
-.scene__orbit--inner::after { background: var(--navy); width: 8px; height: 8px; margin-left: -4px; }
-@keyframes spin { to { transform: rotate(360deg); } }
+.scene__orbit { position: absolute; right: -90px; top: 50%; width: 360px; height: 360px; margin-top: -180px; border: 1px dashed rgba(255, 255, 255, 0.2); border-radius: 50%; animation: spin 80s linear infinite; pointer-events: none; }
+.scene__orbit::after { content: ''; position: absolute; top: 14px; left: 50%; width: 10px; height: 10px; margin-left: -5px; border-radius: 50%; background: var(--primary); box-shadow: 0 0 14px 2px rgba(237, 76, 23, 0.7); }
+.scene__orbit--inner { width: 230px; height: 230px; margin-top: -115px; right: -25px; animation-duration: 55s; animation-direction: reverse; border-color: rgba(255, 255, 255, 0.14); }
+.scene__orbit--inner::after { background: var(--gold); box-shadow: 0 0 12px 2px rgba(201, 162, 75, 0.6); width: 8px; height: 8px; margin-left: -4px; }
 
-.scene__line { position: absolute; left: 21px; top: 28px; bottom: 28px; width: 2px; background: #E1E4EA; transform-origin: top; }
+.scene__line { position: absolute; left: 21px; top: 28px; bottom: 28px; width: 2px; background: rgba(255, 255, 255, 0.14); transform-origin: top; }
 .scene__line::after { content: ''; position: absolute; inset: 0; background: var(--primary); transform-origin: top; transform: scaleY(0); animation: draw 2.2s 0.4s var(--ease) forwards; }
 @keyframes draw { to { transform: scaleY(1); } }
 
@@ -26,8 +69,11 @@
 .stage:nth-of-type(2) { animation-delay: 0.65s; }
 .stage:nth-of-type(3) { animation-delay: 1.15s; margin-bottom: 0; }
 @keyframes rise { from { opacity: 0; transform: translateY(14px); } to { opacity: 1; transform: none; } }
-.stage__dot { width: 44px; height: 44px; border-radius: 50%; background: #fff; border: 2px solid var(--primary); color: var(--primary-text); display: grid; place-items: center; font-weight: 800; font-size: 0.8125rem; z-index: 1; }
-.stage__card { background: #fff; border: 1px solid var(--border); border-radius: var(--radius-lg); padding: 16px 18px; box-shadow: var(--shadow-card); text-decoration: none; color: inherit; display: block; animation: float 7s ease-in-out infinite; }
+.stage__dot { width: 44px; height: 44px; border-radius: 50%; background: var(--navy-deep); border: 2px solid var(--primary); color: #fff; display: grid; place-items: center; font-weight: 800; font-size: 0.8125rem; z-index: 1; box-shadow: 0 0 16px rgba(237, 76, 23, 0.35); }
+.stage__card { display: block; text-decoration: none; color: inherit; padding: 16px 18px; border-radius: var(--radius-lg); background: rgba(20, 43, 82, 0.88); border: 1px solid rgba(255, 255, 255, 0.16); box-shadow: 0 10px 30px rgba(0, 0, 0, 0.28); animation: float 7s ease-in-out infinite; transition: border-color 0.2s; }
+@supports ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
+  .stage__card { background: rgba(255, 255, 255, 0.07); -webkit-backdrop-filter: blur(14px); backdrop-filter: blur(14px); }
+}
 .stage:nth-of-type(2) .stage__card { animation-delay: -2.3s; }
 .stage:nth-of-type(3) .stage__card { animation-delay: -4.6s; }
 a.stage__card:hover { border-color: var(--primary); color: inherit; }
@@ -36,14 +82,17 @@ a.stage__card:hover { border-color: var(--primary); color: inherit; }
   .stage:nth-of-type(2) { margin-left: 28px; }
   .stage:nth-of-type(3) { margin-left: 56px; }
 }
-.stage__label { font-size: 0.75rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--primary-text); margin-bottom: 4px; }
-.stage__title { font-weight: 700; color: var(--navy); line-height: 1.3; letter-spacing: -0.01em; margin: 0 0 4px; }
-.stage__text { margin: 0; font-size: 0.875rem; color: var(--text-body-muted); }
+.stage__label { font-size: 0.75rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--primary-on-dark); margin-bottom: 4px; }
+.stage__title { font-weight: 700; color: #fff; line-height: 1.3; letter-spacing: -0.01em; margin: 0 0 4px; }
+.stage__text { margin: 0; font-size: 0.875rem; color: var(--soft-grey); }
 
 /* Live counts */
 .stats { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
-@media (min-width: 720px) { .stats { grid-template-columns: repeat(4, minmax(0, 1fr)); } }
+@media (min-width: 720px) { .stats { grid-template-columns: repeat(var(--n, 4), minmax(0, 1fr)); } }
 .stat { padding: 22px 0 22px 20px; border-left: 1px solid var(--border); }
 .stat:first-child { border-left: 0; padding-left: 0; }
 .stat__num { font-size: clamp(1.75rem, 1.2rem + 2vw, 2.5rem); font-weight: 700; letter-spacing: -0.03em; color: var(--navy); font-variant-numeric: tabular-nums; line-height: 1.1; }
 .stat__label { font-size: var(--fs-sm); color: var(--text-body-muted); }
+
+/* On phones the decorative rings sit behind the glass cards and can cut across the text, so they are hidden there. */
+@media (max-width: 559px) { .scene__orbit { display: none; } }

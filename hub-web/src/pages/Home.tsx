@@ -8,6 +8,7 @@ import { NewsletterForm } from '../components/Forms'
 import { CATEGORIES } from '../lib/categories'
 import { getCounts, listArticles, listProducts, listResources } from '../lib/data'
 import { useAsync } from '../lib/hooks'
+import { CONTACT_EMAIL } from '../lib/site'
 
 export default function Home() {
   const articles = useAsync(() => listArticles(3), [])
@@ -29,7 +30,7 @@ export default function Home() {
       <Seo
         description="Practical guides, downloads and digital products on AI tools, affiliate marketing, content creation and online business. Honest education with no income promises."
         path="/"
-        jsonLd={{ '@context': 'https://schema.org', '@type': 'Organization', name: 'Wealth Builders Hub', slogan: 'Learn. Build. Grow.', founder: { '@type': 'Person', name: 'Mustapha Abdurrazzaq' } }}
+        jsonLd={{ '@context': 'https://schema.org', '@type': 'Organization', name: 'Wealth Builders Hub', slogan: 'Learn. Build. Grow.', email: CONTACT_EMAIL, founder: { '@type': 'Person', name: 'Mustapha Abdurrazzaq' } }}
       />
 
       <section className="hero">
@@ -37,14 +38,14 @@ export default function Home() {
           <div>
             <p className="eyebrow">Digital business education</p>
             <h1>
-              The internet pays people who <span className="accent">understand it.</span> Start understanding it.
+              Build Skills. Create Income. <span className="accent">Shape Your Financial Future.</span>
             </h1>
             <p className="lede">
-              Wealth Builders Hub teaches the working parts of online business: AI tools, affiliate marketing, content, digital products and self-publishing. Clear guides, tools you can download, and nothing sold as a shortcut.
+              Your gateway to digital opportunities, practical knowledge, business resources and strategies designed to help you build a smarter financial future.
             </p>
             <div className="hero__cta">
-              <Link className="btn btn--primary" to="/resources">Browse the library</Link>
-              <Link className="btn btn--ghost" to="/affiliate">Join the affiliate programme</Link>
+              <Link className="btn btn--primary" to="/articles">Explore the Hub</Link>
+              <Link className="btn btn--ghost" to="/resources">Discover Resources</Link>
             </div>
             <p className="hero__note">Education only. We never promise income, and results depend on your effort and market.</p>
           </div>
@@ -54,7 +55,7 @@ export default function Home() {
 
       {statItems.length > 0 && (
         <section aria-label="Library size" className="wrap">
-          <div className="stats" style={{ gridTemplateColumns: `repeat(${Math.min(statItems.length, 2)}, minmax(0,1fr))` }}>
+          <div className="stats" style={{ ['--n' as string]: statItems.length }}>
             {statItems.map((s) => <Counter key={s.l} value={s.v} label={s.l} />)}
           </div>
         </section>

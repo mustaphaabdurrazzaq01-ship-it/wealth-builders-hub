@@ -1,22 +1,24 @@
 import { useEffect, useState } from 'react'
 import { Link, NavLink, Outlet, useLocation } from 'react-router-dom'
+import { CONTACT_EMAIL } from '../lib/site'
 
 const LINKS = [
   { to: '/articles', label: 'Articles' },
   { to: '/resources', label: 'Resources' },
   { to: '/products', label: 'Products' },
-  { to: '/affiliate', label: 'Affiliates' },
   { to: '/about', label: 'About' },
   { to: '/contact', label: 'Contact' },
 ]
 
-function Brand() {
+// The compact lockup suits the header; the full logo with its tagline suits the footer.
+function Brand({ full = false }: { full?: boolean }) {
   return (
     <Link to="/" className="brand" aria-label="Wealth Builders Hub, home">
-      <span className="brand__mark" aria-hidden="true">
-        WB
-      </span>
-      <span>Wealth Builders Hub</span>
+      {full ? (
+        <img src="/logo-full-light.png" alt="Wealth Builders Hub. Learn. Build. Grow." width={720} height={254} />
+      ) : (
+        <img src="/logo-lockup-light.png" alt="Wealth Builders Hub" width={560} height={150} />
+      )}
     </Link>
   )
 }
@@ -47,6 +49,9 @@ export function Layout() {
               </NavLink>
             ))}
           </nav>
+          <Link className="btn btn--primary nav-cta" to="/affiliate">
+            Become an affiliate
+          </Link>
           <button className="nav-toggle" aria-label="Menu" aria-expanded={open} aria-controls="mobile-nav" onClick={() => setOpen((o) => !o)}>
             <span />
           </button>
@@ -60,6 +65,9 @@ export function Layout() {
                 </NavLink>
               ))}
             </nav>
+            <Link className="btn btn--primary" to="/affiliate" tabIndex={open ? 0 : -1}>
+              Become an affiliate
+            </Link>
           </div>
         </div>
       </header>
@@ -70,8 +78,11 @@ export function Layout() {
         <div className="wrap">
           <div className="footer-grid">
             <div className="footer-brand">
-              <Brand />
+              <Brand full />
               <p>Practical education on digital business, AI tools and online income. Learn. Build. Grow.</p>
+              <p className="footer-contact">
+                <a href={`mailto:${CONTACT_EMAIL}`}>{CONTACT_EMAIL}</a>
+              </p>
             </div>
             <div>
               <h4>Explore</h4>
